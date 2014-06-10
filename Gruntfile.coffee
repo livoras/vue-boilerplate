@@ -12,6 +12,7 @@ module.exports = (grunt)->
 
     clean: 
       bin: ['bin']
+      dist: ['dist']
 
     browserify: 
       common:
@@ -40,58 +41,47 @@ module.exports = (grunt)->
       compile:
         options:
           livereload: true
-        files: ["src/**/*.coffee", "src/**/*.less", "src/**/*.hbs"]
-        tasks: ["browserify", "less:dev", "concat:less"]
+        files: ['src/**/*.coffee', 'src/**/*.less', 'src/**/*.hbs']
+        tasks: ['browserify', 'less']
 
     less:    
       dev:
-        expand: true
-        flatten: true
-        cwd: 'src/'
-        src: ['**/*.less']
-        dest: 'bin/css/'
-        ext: '.css'
+        files:
+          'bin/style.css': ['src/**/*.less']
 
-      build:
-        options:
-          compress: true
-        expand: true
-        flatten: true
-        cwd: 'src/'
-        src: ['**/*.less']
-        dest: 'bin/css/'
-        ext: '.css'
 
     uglify:
       build:
-        expand: true
-        cwd: 'bin/js/'
-        src: '**/*.js'
-        dest: 'bin/js/'
+        files:
+          'dist/build.js': ['bin/**/*.js']
 
-    concat:    
-      less:
-        options:
-          separator: '/*========================*/'
-        src: ['bin/css/**/*.css']  
-        dest: 'bin/style.css'
+    cssmin:    
+      build:
+        files:
+          'dist/style.min.css': ['bin/style.css']
 
-  grunt.loadNpmTasks "grunt-contrib-connect"
-  grunt.loadNpmTasks "grunt-contrib-clean"
-  grunt.loadNpmTasks "grunt-browserify"
-  grunt.loadNpmTasks "grunt-contrib-less"
-  grunt.loadNpmTasks "grunt-contrib-watch"
-  grunt.loadNpmTasks "grunt-contrib-uglify"
-  grunt.loadNpmTasks "grunt-contrib-concat"
+  grunt.loadNpmTasks 'grunt-contrib-connect'
+  grunt.loadNpmTasks 'grunt-contrib-clean'
+  grunt.loadNpmTasks 'grunt-browserify'
+  grunt.loadNpmTasks 'grunt-contrib-less'
+  grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-contrib-uglify'
+  grunt.loadNpmTasks 'grunt-contrib-cssmin'
 
-  grunt.registerTask "default", ->
+  grunt.registerTask 'default', ->
     grunt.task.run [
-      "connect"
-      "clean:bin"
-      "browserify"
-      "less:dev"
-      "concat:less"
-      "watch"
+      'connect'
+      'clean:bin'
+      'browserify'
+      'less'
+      'watch'
     ]
 
-  grunt.registerTask "build", ['clean:bin', 'browserify', 'less:build', 'uglify']
+  grunt.registerTask 'build', [
+    'clean:bin'
+    'clean:dist'
+    'browserify' 
+    'less' 
+    'uglify'
+    'cssmin'
+  ]
