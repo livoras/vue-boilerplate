@@ -41,7 +41,7 @@ module.exports = (grunt)->
       compile:
         options:
           livereload: true
-        files: ['src/**/*.coffee', 'src/**/*.less', 'src/**/*.hbs']
+        files: ['src/**/*.coffee', 'src/**/*.less', 'src/**/*.html', 'index.html']
         tasks: ['browserify', 'less']
 
     less:    
@@ -53,7 +53,7 @@ module.exports = (grunt)->
     uglify:
       build:
         files:
-          'dist/build.js': ['bin/**/*.js']
+          'dist/build.min.js': ['bin/**/*.js']
 
     cssmin:    
       build:
