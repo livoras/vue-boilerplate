@@ -2,11 +2,8 @@
   "name": "vue-boilerplate",
   "version": "0.0.1",
   "description": "Boilerplate of vuejs",
-  "main": "index.js",
   "scripts": {
-    "test": "grunt test",
-    "build": "browserify main.js -o static/bundle.js",
-    "watch": "watchify main.js -o static/bundle.js --debug --verbose"
+    "test": "grunt test"
   },
   "keywords": [
     "boilerplate",
